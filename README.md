@@ -1,60 +1,33 @@
 # Sercan´s Lotterie
 
-Eine deutschsprachige Lotterie für RP-Runden mit Losverwaltung, zufälliger Gewinnerziehung und Ziehungshistorie. Alle Beträge sind fiktive Spielwährung.
+Öffentliche RP-Lotterie: https://sercan1115.github.io/sercans-lotterie/
 
-**Webseite:** [Sercan´s Lotterie](https://sercan1115.github.io/sercans-lotterie/)
+Veranstalterbereich: https://sercans-lotterie-service.ochre-shore-2706.chatgpt.site/admin
 
-## Verwendung
+## Neuer Ablauf
 
-1. Lege in den Einstellungen Rundennamen, Lospreis, Startjackpot und Spielwährung fest.
-2. Trage den RP-Namen und die gewünschte Losanzahl ein. Pro Eintrag sind 1 bis 100 Lose möglich, pro Runde höchstens 10.000.
-3. Prüfe die Losliste und entferne bei Bedarf einzelne Lose. Der Jackpot besteht aus Startjackpot plus Losanzahl mal Lospreis.
-4. Starte die Ziehung. Jedes Los hat dieselbe Gewinnchance; mehrere Lose erhöhen entsprechend die Chance des Spielers. Die Auswahl nutzt den sicheren Zufallsgenerator des Browsers ohne Modulo-Verzerrung.
-5. Nach der Ziehung ist die Runde gesperrt. Eine neue Runde leert die Losliste und behält die Einstellungen sowie die letzten 100 Ziehungen.
+1. Sercan legt im geschützten Veranstalterbereich die Runde, den Lospreis, Startjackpot und Bekanntgabetermin fest.
+2. Nach Erhalt und Bestätigung der fiktiven RP-Währung stellt Sercan einen persönlichen Einmalcode für den RP-Namen und die bezahlte Losanzahl aus.
+3. Der Spieler gibt diesen RP-Namen und den Code auf der Startseite ein. Die Lose werden einmalig in der gemeinsamen Datenbank gespeichert; die Seite zeigt eine Teilnahmebestätigung.
+4. Die Startseite zeigt allen Besuchern dieselbe Runde und einen Countdown auf Basis der Serverzeit. Die erste Serveranfrage ab dem Termin speichert genau einen Gewinner; geöffnete Seiten aktualisieren sich automatisch.
+5. Nach Abschluss kann Sercan die nächste Runde anlegen. Ungenutzte Codes gelten nur für ihre ursprüngliche Runde und werden nicht übertragen.
 
-## Mehrere Spieler und Ergebnisse teilen
+Der erste Termin wird vom Veranstalter später festgelegt. Bis dahin wird kein fiktiver Countdown angezeigt. Ausgestellte Codes reservieren Loskapazität; nur eingelöste Lose nehmen an der Ziehung teil und erhöhen den angezeigten Jackpot.
 
-Über die Sammelvergabe lassen sich bis zu 100 Spielerzeilen auf einmal eintragen. Schreibe je Zeile `RP-Name;Anzahl`; ein Name ohne Anzahl erhält ein Los. Die gesamte Liste wird geprüft, bevor Lose übernommen werden.
+## Verwaltung und Daten
 
-```text
-Sercan Kaya;3
-Mia Müller;2
-Jonas Weber
-```
+Die Verwaltungsoberfläche nutzt die ChatGPT-Anmeldung und eine serverseitige Freigabe des Eigentümerkontos. Die öffentliche Webseite kann keine Codes erstellen. Vollständige Codes werden nur einmal nach der Ausstellung angezeigt, und der Server speichert nur deren Hash. Ein Code ist namensgebunden und kann einmal eingelöst werden. Ein identischer Netzwerk-Retry liefert denselben Beleg statt zusätzlicher Lose.
 
-Mit der Teilnehmersuche findest du Namen auch unabhängig von Großschreibung und Umlauten. Sortiere die Liste alphabetisch oder nach der Anzahl der Lose. Suche und Sortierung verändern weder die Lose noch die Gewinnchancen.
+GitHub Pages liefert nur die öffentliche Oberfläche. Der separate Sites-Dienst mit D1 übernimmt die gemeinsamen Runden, Codes, Fristen und Gewinner. Keine Zugangsdaten gehören in diesen öffentlichen Quellcode. Die Backend-Quelle liegt im Workspace neben diesem Projekt unter sercans-lotterie-service und im zugehörigen Sites-Quellrepository.
 
-Der CSV-Export enthält alle Lose der aktuellen Runde mit Loswert, Spielwährung und Status, zum Beispiel für Excel. Er ergänzt die JSON-Sicherung; wiederherstellen kannst du eine Runde über JSON. Nach einer Ziehung kannst du die Gewinnerbekanntgabe für Discord oder euren RP-Chat kopieren. Erwähnungen in RP-Namen werden dabei entschärft.
+Vorherige browserlokale Runden bleiben unter ihrem bisherigen Speicherschlüssel erhalten. Sie werden nicht automatisch als bezahlte Teilnahmen in die gemeinsame Datenbank übernommen. Im Browser werden jetzt ausschließlich Effektpräferenzen und Kopien eigener Teilnahmebestätigungen gespeichert; die gültigen Lose werden vom Server geführt.
 
-Zur Ziehung gehören Countdown, Losanimation und Konfetti. Soundeffekte lassen sich auf Wunsch einschalten. Die Einstellung für reduzierte Bewegung des Browsers wird berücksichtigt.
+Alle Beträge sind fiktive RP-Währung. Die Webseite verarbeitet keine Zahlungen.
 
-Die Daten werden ausschließlich im `localStorage` dieses Browsers gespeichert. Andere Geräte, Browser und Besucher besitzen eigene, voneinander unabhängige Runden. Es gibt keinen Server, keine Anmeldung und keine gemeinsame Datenbank. Browserdaten können gelöscht werden: Exportiere deshalb regelmäßig eine JSON-Sicherung; über den Import lässt sie sich wiederherstellen. Eine Sicherung enthält RP-Namen und Ziehungsergebnisse und sollte entsprechend aufbewahrt werden.
+## Entwicklung und Veröffentlichung
 
-Die Seite verwaltet eine RP-Lotterie für den Veranstalter. Sie verarbeitet keine Zahlungen und führt keine Echtgeldtransaktionen aus. Die lokale Historie ist kein manipulationssicheres öffentliches Register.
+Node.js 22 oder neuer, keine zusätzlichen Frontend-Abhängigkeiten. Mit npm test werden die bisherigen Lotterie-Helfer geprüft. npm run dev startet die statische Vorschau. Die gemeinsame API erlaubt im Produktivbetrieb ausschließlich die GitHub-Pages-Origin; für vollständige lokale Integration ist ein Testbackend erforderlich.
 
-## Lokal starten
+Der GitHub-Actions-Workflow testet und veröffentlicht bei jedem Push auf main das Verzeichnis dist. Sites-Backend und GitHub-Pages-Frontend werden unabhängig veröffentlicht.
 
-Voraussetzung: Node.js 22 oder neuer. Es sind keine zusätzlichen Pakete erforderlich.
-
-```sh
-npm test
-npm run dev
-```
-
-Öffne die beim Start angezeigte lokale Adresse. Der Webserver liefert den Inhalt von `dist/` aus. Mit `Strg+C` beendest du ihn.
-
-## GitHub Pages
-
-Die Seite ist statisches HTML, CSS und JavaScript im Verzeichnis `dist/`; ein Build ist nicht nötig. Der Workflow `.github/workflows/pages.yml` führt bei jedem Push auf `main` die Tests aus und veröffentlicht anschließend `dist/` auf GitHub Pages.
-
-Unter **Settings → Pages → Build and deployment → Source** muss **GitHub Actions** ausgewählt sein. Der Workflow lässt sich außerdem unter **Actions → Deploy GitHub Pages → Run workflow** manuell starten.
-
-## Dateien
-
-- `dist/index.html`, `dist/styles.css`, `dist/app.mjs`: Oberfläche und Browserlogik.
-- `dist/engine.mjs`: validierte Lotterie- und Sicherungslogik.
-- `dist/round-tools.mjs`: Sammelvergabe, Teilnehmersuche, CSV und Gewinnerbekanntgabe.
-- `tests/*.test.mjs`: Tests der Ziehung, Rundensperre, Sicherungen und Zusatzfunktionen.
-- `scripts/serve.mjs`: lokaler Vorschau-Webserver.
-
-Sicherung und Quellcode enthalten keine Zugangsdaten. Es werden keine externen Bibliotheken oder Analyse-Dienste benötigt.
+Wichtige Dateien: dist/public-app.mjs (öffentliche Oberfläche), dist/service-config.mjs (öffentliche Backend-URL ohne Schlüssel), dist/public.css (Layout), dist/effects.mjs und dist/effects.css (schaltbare Effekte). Ältere lokale Helfer bleiben für bestehende Sicherungen und Tests erhalten.
