@@ -13,6 +13,7 @@ let serverBaseline = 0, performanceBaseline = 0, lastSuccess = 0;
 let loading = false, redeeming = false, pollTimer, toastTimer, showTimer;
 let priorJackpot, zeroRequested = false;
 let pendingRequests = {};
+const copyStates = new WeakMap();
 try { pendingRequests = JSON.parse(sessionStorage.getItem(requestKey) || '{}'); } catch { /* Network retries still work in this tab. */ }
 if (!pendingRequests || typeof pendingRequests !== 'object' || Array.isArray(pendingRequests)) pendingRequests = {};
 
@@ -52,7 +53,7 @@ function accept(next) {
   $('#sync-state').textContent = `Mit dem Server synchronisiert · ${new Intl.DateTimeFormat('de-DE', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Berlin' }).format(new Date(next.serverTime))} Uhr`;
   error('');
   render();
-  if (previous?.id === next.round?.id && previous.status === 'open' && next.round?.winner && !$('#winner-dialog').open) playWinner(next.round.winner);
+  if (previous && next.round && previous.id === next.round.id && previous.status === 'open' && next.round.winner && !$('#winner-dialog').open) playWinner(next.round.winner);
 }
 
 function render() {
@@ -173,8 +174,14 @@ $('#redeem-form').addEventListener('submit', async event => {
 async function copyText(text, button) {
   try {
     await navigator.clipboard.writeText(text);
-    const original = button.textContent; button.textContent = 'Kopiert!';
-    setTimeout(() => { button.textContent = original; }, 2500);
+    const original = copyStates.get(button) || { nodes: [...button.childNodes].map(node => node.cloneNode(true)) };
+    clearTimeout(original.timer);
+    button.textContent = 'Kopiert!';
+    original.timer = setTimeout(() => {
+      button.replaceChildren(...original.nodes.map(node => node.cloneNode(true)));
+      copyStates.delete(button);
+    }, 2500);
+    copyStates.set(button, original);
   } catch { toast('Kopieren ist hier nicht verfügbar. Markiere den Text und kopiere ihn manuell.'); }
 }
 $('#receipt-copy').addEventListener('click', () => {
