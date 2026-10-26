@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173c32">
+  <meta name="description" content="Sercan´s Lotterie – deine Lotterie fürs Roleplay. Lose verwalten, den RP-Jackpot füllen und gemeinsam den großen Moment erleben.">
+  <title>Sercan´s Lotterie | Dein Los. Dein Moment.</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#lotterie">Zur Lotterie</a>
+  <header class="site-header wrap">
+    <a class="brand" href="./" aria-label="Sercan´s Lotterie Startseite"><span class="brand-icon" aria-hidden="true">✳</span><span>Sercan´s <strong>Lotterie</strong><small>DEIN LOS. DEIN MOMENT.</small></span></a>
+    <nav aria-label="Hauptnavigation"><a class="active" href="#lotterie">Lotterie</a><a href="#verlauf">Ziehungen</a><a href="#ablauf">So geht’s</a></nav>
+    <button class="button button-outline settings-open"><svg><use href="#i-sliders"/></svg><span>Runde einrichten</span></button>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy"><span class="eyebrow"><span class="status-dot"></span> FÜR EURE ROLEPLAY-MOMENTE</span><h1 id="hero-title">Kleine Lose.<br>Große <em>Geschichten.</em></h1><p>Ein bisschen Nervenkitzel gehört dazu.<br>Hol deine Crew zusammen und lass das Los entscheiden.</p><a class="button button-lime" href="#lotterie">Ab in den Lostopf <svg><use href="#i-arrow"/></svg></a><span class="hero-note">100 % Roleplay. 100 % Spannung.</span></div>
+      <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><span class="spark spark-one">✦</span><span class="spark spark-two">✧</span><span class="art-label">DAS GLÜCK HAT EINEN NAMEN.</span><div class="lottery-ticket"><div class="ticket-top"><span>SERCAN´S<br><b>LOTTERIE</b></span><span class="ticket-star">✳</span></div><div class="ticket-middle">DEIN NÄCHSTES<br><strong>großes Ding.</strong></div><div class="ticket-bottom"><span>GOOD LUCK, ROLEPLAYER.</span><span>№ 001</span></div></div><div class="ball ball-one">07</div><div class="ball ball-two">23</div><div class="ball ball-three">11</div><span class="handwritten">Vielleicht ist es dein Moment.</span></div>
+    </section>
+
+    <section id="lotterie" class="lottery-section" aria-labelledby="round-heading">
+      <div class="section-heading"><div><span class="eyebrow muted">DER LOSTOPF IST BEREIT</span><h2 id="round-heading">Die aktuelle Runde<span class="round-badge" id="round-number">#01</span></h2></div><div class="local-status" title="Die Daten werden nur in diesem Browser gespeichert."><span class="status-dot"></span> Lokal gespeichert <svg><use href="#i-info"/></svg></div></div>
+      <div class="dashboard">
+        <section class="panel tickets-panel" aria-labelledby="tickets-heading">
+          <div class="panel-heading"><h3 id="tickets-heading"><svg><use href="#i-ticket"/></svg> Ab in den Lostopf</h3><span class="pill" id="ticket-total">0 Lose</span></div>
+          <p class="subtle intro">Trage die RP-Namen deiner Mitspieler ein und vergib ihre Lose.</p>
+          <form id="ticket-form"><div class="entry-fields"><label>RP-Name<input id="player-name" name="name" type="text" placeholder="z. B. Sercan Yilmaz" minlength="2" maxlength="40" required autocomplete="off"></label><label class="count-label">Lose<input id="ticket-count" name="count" type="number" value="1" min="1" max="100" required></label><button class="button button-dark" id="add-ticket" type="submit"><svg><use href="#i-plus"/></svg> Lose hinzufügen</button></div></form>
+          <div class="list-heading"><span>TEILNEHMER <span id="participant-count">0</span></span><div class="list-actions"><button class="icon-button" id="export-button" aria-label="Sicherung als JSON exportieren" title="Sicherung exportieren"><svg><use href="#i-download"/></svg></button><button class="icon-button" id="import-button" aria-label="Sicherung importieren" title="Sicherung importieren"><svg><use href="#i-upload"/></svg></button><input type="file" id="import-file" accept=".json,application/json" hidden></div></div>
+          <div id="participant-list" class="participant-list"><div class="empty-state"><span class="empty-icon"><svg><use href="#i-ticket"/></svg></span><strong>Hier ist noch Platz für Glück.</strong><p>Füge den ersten RP-Namen hinzu.<br>Jedes Los ist eine neue Chance.</p></div></div>
+          <div class="panel-footnote"><svg><use href="#i-shield"/></svg> Jedes Los hat die gleiche Gewinnchance.</div>
+        </section>
+
+        <aside class="draw-column" aria-label="Jackpot und Ziehung"><section class="jackpot-panel"><div class="jackpot-top"><span class="eyebrow">EUER RP-JACKPOT</span><span class="jackpot-symbol" aria-hidden="true">✳</span></div><div class="jackpot-amount" id="jackpot-amount">50.000 <span>RP $</span></div><p>Große Träume. Ein glückliches Los.</p><div class="jackpot-divider"></div><div class="stat-row"><span>Wert pro Los</span><strong id="price-value">1.000 RP $</strong></div><div class="stat-row"><span>Lose im Topf</span><strong id="pot-value">0</strong></div><div class="stat-row"><span>Aktuelle Ziehung</span><strong id="round-title">Freitagsziehung</strong></div><button class="button button-dark draw-button" id="draw-button" disabled><svg><use href="#i-spark"/></svg><span>Gewinner ziehen</span><svg><use href="#i-arrow"/></svg></button><span class="draw-hint" id="draw-hint">Deine Ziehung startet ab dem ersten Los.</span></section><div class="rp-note"><span class="rp-note-icon"><svg><use href="#i-heart"/></svg></span><p><strong>Alles bleibt im Roleplay.</strong><br>Nur fiktive RP-Währung. Keine Zahlungen.<br>Die Spielleitung verwaltet die Runde in diesem Browser.</p></div></aside>
+      </div>
+    </section>
+
+    <section id="verlauf" class="history-section" aria-labelledby="history-heading"><div class="section-heading"><div><span class="eyebrow muted">DIE GLÜCKLICHEN MOMENTE</span><h2 id="history-heading">Schon Geschichte.</h2></div><button class="button button-outline" id="next-round"><svg><use href="#i-plus"/></svg> Neue Runde</button></div><div class="history-list" id="history-list"><div class="history-empty"><svg><use href="#i-trophy"/></svg><p><strong>Der erste große Moment wartet noch.</strong><br>Nach einer Ziehung findest du hier den Gewinner.</p><span>UND VIELLEICHT STEHT HIER BALD DEIN NAME.</span></div></div></section>
+
+    <section id="ablauf" class="how-section" aria-labelledby="how-heading"><div class="how-heading"><span class="eyebrow muted">EINFACH MITMACHEN</span><h2 id="how-heading">Drei Schritte.<br>Ein großer Moment.</h2></div><div class="how-step"><span>01</span><h3>Runde vorbereiten.</h3><p>Lege den Loswert und den Start-Jackpot für eure RP-Runde fest.</p></div><div class="how-step"><span>02</span><h3>Die Crew eintragen.</h3><p>RP-Namen eingeben, Lose vergeben und den Lostopf füllen.</p></div><div class="how-step"><span>03</span><h3>Glück entscheiden lassen.</h3><p>Ziehung starten. Ein zufälliges Los gewinnt den gesamten RP-Jackpot.</p></div></section>
+  </main>
+
+  <footer class="wrap site-footer"><a class="footer-brand" href="./">✳ &nbsp;Sercan´s Lotterie</a><span>Für die Geschichten, die man zusammen schreibt.</span><span>Made for Roleplay <span class="footer-star">✦</span></span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div id="storage-warning" class="storage-warning" role="alert" hidden></div>
+
+  <dialog id="settings-dialog" aria-labelledby="settings-heading"><form id="settings-form"><div class="dialog-heading"><div><span class="eyebrow muted">DEINE SPIELREGELN</span><h2 id="settings-heading">Runde einrichten</h2></div><button type="button" class="icon-button close-dialog" aria-label="Schließen"><svg><use href="#i-close"/></svg></button></div><p class="subtle">Passe die Werte für eure aktuelle RP-Runde an.</p><label>Name der Ziehung<input name="title" id="setting-title" required maxlength="60"></label><div class="settings-grid"><label>Wert pro Los<input name="ticketPrice" id="setting-price" type="number" min="1" max="1000000000" step="1" required></label><label>Start-Jackpot<input name="seedJackpot" id="setting-seed" type="number" min="0" max="1000000000" step="1" required></label></div><label>Fiktive Währung<input name="currency" id="setting-currency" maxlength="12" required placeholder="RP $"></label><p class="form-note">Der Jackpot besteht aus dem Startwert plus allen Loswerten. Änderungen gelten für die gesamte aktuelle Runde.</p><div class="dialog-actions"><button type="button" class="button button-outline close-dialog">Abbrechen</button><button class="button button-dark" type="submit">Einstellungen speichern</button></div></form></dialog>
+
+  <dialog id="winner-dialog" class="winner-dialog" aria-labelledby="winner-heading"><button type="button" class="icon-button close-dialog winner-close" aria-label="Schließen"><svg><use href="#i-close"/></svg></button><div class="winner-emblem" aria-hidden="true">✳</div><span class="eyebrow" id="winner-eyebrow">DER GROSSE MOMENT</span><h2 id="winner-heading">Das Glück entscheidet …</h2><div id="rolling-number" class="rolling-number" aria-hidden="true">001</div><div id="winner-result" hidden><p class="winner-ticket" id="winner-ticket"></p><div class="winner-prize" id="winner-prize"></div><p>Deine Geschichte hat gerade ein neues Kapitel.</p><button type="button" class="button button-lime close-dialog">Glückwunsch! <svg><use href="#i-spark"/></svg></button></div><div id="confetti" aria-hidden="true"></div></dialog>
+
+  <dialog id="confirm-dialog" aria-labelledby="confirm-heading"><div class="dialog-heading"><h2 id="confirm-heading">Neue Runde starten?</h2><button type="button" class="icon-button close-dialog" aria-label="Schließen"><svg><use href="#i-close"/></svg></button></div><p id="confirm-description" class="subtle"></p><div class="dialog-actions"><button class="button button-outline close-dialog" type="button">Abbrechen</button><button class="button button-dark" id="confirm-action" type="button">Neue Runde starten</button></div></dialog>
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="svg-symbols" aria-hidden="true"><symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol><symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol><symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4Z"/><path d="M15 5v3m0 3v2m0 3v3"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h7m5 0h4M4 17h3m5 0h8"/><circle cx="13" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol><symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.1"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6Z"/><path d="m8 12 3 3 5-6"/></symbol><symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol><symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V3m-5 5 5-5 5 5M4 16v4h16v-4"/></symbol><symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 2.4 6.6L21 12l-6.6 2.4L12 21l-2.4-6.6L3 12l6.6-2.4Z"/></symbol><symbol id="i-heart" viewBox="0 0 24 24"><path d="M20 5c-3-3-7-1-8 2-1-3-5-5-8-2-5 5 8 15 8 15S25 10 20 5Z"/></symbol><symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 3h10v7a5 5 0 0 1-10 0Zm0 2H3v3a4 4 0 0 0 4 4m10-7h4v3a4 4 0 0 1-4 4M12 15v6m-4 0h8"/></symbol><symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/></symbol></svg>
+</body>
+</html>
