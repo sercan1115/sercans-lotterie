@@ -1,6 +1,6 @@
 {
   "name": "sercans-lotterie",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Sercan´s Lotterie – eine browserlokale Lotterie für RP-Spielwährung",
   "type": "module",

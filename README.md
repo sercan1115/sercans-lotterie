@@ -12,6 +12,22 @@ Eine deutschsprachige Lotterie für RP-Runden mit Losverwaltung, zufälliger Gew
 4. Starte die Ziehung. Jedes Los hat dieselbe Gewinnchance; mehrere Lose erhöhen entsprechend die Chance des Spielers. Die Auswahl nutzt den sicheren Zufallsgenerator des Browsers ohne Modulo-Verzerrung.
 5. Nach der Ziehung ist die Runde gesperrt. Eine neue Runde leert die Losliste und behält die Einstellungen sowie die letzten 100 Ziehungen.
 
+## Mehrere Spieler und Ergebnisse teilen
+
+Über die Sammelvergabe lassen sich bis zu 100 Spielerzeilen auf einmal eintragen. Schreibe je Zeile `RP-Name;Anzahl`; ein Name ohne Anzahl erhält ein Los. Die gesamte Liste wird geprüft, bevor Lose übernommen werden.
+
+```text
+Sercan Kaya;3
+Mia Müller;2
+Jonas Weber
+```
+
+Mit der Teilnehmersuche findest du Namen auch unabhängig von Großschreibung und Umlauten. Sortiere die Liste alphabetisch oder nach der Anzahl der Lose. Suche und Sortierung verändern weder die Lose noch die Gewinnchancen.
+
+Der CSV-Export enthält alle Lose der aktuellen Runde mit Loswert, Spielwährung und Status, zum Beispiel für Excel. Er ergänzt die JSON-Sicherung; wiederherstellen kannst du eine Runde über JSON. Nach einer Ziehung kannst du die Gewinnerbekanntgabe für Discord oder euren RP-Chat kopieren. Erwähnungen in RP-Namen werden dabei entschärft.
+
+Zur Ziehung gehören Countdown, Losanimation und Konfetti. Soundeffekte lassen sich auf Wunsch einschalten. Die Einstellung für reduzierte Bewegung des Browsers wird berücksichtigt.
+
 Die Daten werden ausschließlich im `localStorage` dieses Browsers gespeichert. Andere Geräte, Browser und Besucher besitzen eigene, voneinander unabhängige Runden. Es gibt keinen Server, keine Anmeldung und keine gemeinsame Datenbank. Browserdaten können gelöscht werden: Exportiere deshalb regelmäßig eine JSON-Sicherung; über den Import lässt sie sich wiederherstellen. Eine Sicherung enthält RP-Namen und Ziehungsergebnisse und sollte entsprechend aufbewahrt werden.
 
 Die Seite verwaltet eine RP-Lotterie für den Veranstalter. Sie verarbeitet keine Zahlungen und führt keine Echtgeldtransaktionen aus. Die lokale Historie ist kein manipulationssicheres öffentliches Register.
@@ -37,7 +53,8 @@ Unter **Settings → Pages → Build and deployment → Source** muss **GitHub A
 
 - `dist/index.html`, `dist/styles.css`, `dist/app.mjs`: Oberfläche und Browserlogik.
 - `dist/engine.mjs`: validierte Lotterie- und Sicherungslogik.
-- `tests/engine.test.mjs`: Tests der Ziehung, Rundensperre, Limits und Sicherungen.
+- `dist/round-tools.mjs`: Sammelvergabe, Teilnehmersuche, CSV und Gewinnerbekanntgabe.
+- `tests/*.test.mjs`: Tests der Ziehung, Rundensperre, Sicherungen und Zusatzfunktionen.
 - `scripts/serve.mjs`: lokaler Vorschau-Webserver.
 
 Sicherung und Quellcode enthalten keine Zugangsdaten. Es werden keine externen Bibliotheken oder Analyse-Dienste benötigt.

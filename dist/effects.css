@@ -1,0 +1,74 @@
+/* All movement is opt-out, and always follows the operating system preference. */
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-effects="on"] .hero-copy { animation: show-enter .65s both; }
+  :root[data-effects="on"] .lottery-ticket { animation: show-float 6.5s ease-in-out infinite; }
+  :root[data-effects="on"] .ball-one { animation: show-float 5s .25s ease-in-out infinite reverse; }
+  :root[data-effects="on"] .ball-two { animation: show-float 6s -.8s ease-in-out infinite; }
+  :root[data-effects="on"] .ball-three { animation: show-float 4.7s -.4s ease-in-out infinite reverse; }
+  :root[data-effects="on"] .hero .spark { animation: show-twinkle 4.5s ease-in-out infinite; }
+  :root[data-effects="on"] .hero .spark-two { animation-delay: 1.4s; }
+  :root[data-effects="on"] .ticket-top { position: relative; overflow: hidden; }
+  :root[data-effects="on"] .ticket-top::after {
+    content: ''; position: absolute; inset: -100% -60%; pointer-events: none;
+    background: linear-gradient(115deg, transparent 38%, #ffffff75 48%, transparent 58%);
+    animation: show-glint 7s 1s ease-in-out infinite;
+  }
+  :root[data-effects="on"] .show-dialog[open] { animation: show-modal .3s cubic-bezier(.2,.8,.2,1) both; }
+  :root[data-effects="on"] .show-dialog[data-stage="countdown"] #draw-countdown {
+    animation: show-countdown .85s ease-out infinite;
+  }
+  :root[data-effects="on"] .show-dialog[data-stage="mixing"] .draw-orbit { animation: show-orbit 3s linear infinite; }
+  :root[data-effects="on"] .show-dialog[data-stage="mixing"] .draw-orbit:nth-child(2) { animation-duration: 4.7s; animation-direction: reverse; }
+  :root[data-effects="on"] .show-dialog[data-stage="mixing"] .draw-orbit:nth-child(3) { animation-duration: 6.1s; }
+  :root[data-effects="on"] .show-dialog[data-stage="mixing"] #rolling-number { animation: show-reel .14s linear infinite; }
+  :root[data-effects="on"] .show-dialog[data-stage="winner"] .winner-emblem { animation: show-emblem .9s cubic-bezier(.18,.8,.2,1) both; }
+  :root[data-effects="on"] .show-dialog[data-stage="winner"] #winner-result { animation: show-enter .6s .1s both; }
+  :root[data-effects="on"] .show-dialog[data-stage="winner"] #winner-heading { animation: show-enter .55s both; }
+  :root[data-effects="on"] .show-confetti { animation: show-confetti-fall 3.6s var(--confetti-delay) cubic-bezier(.15,.6,.5,1) both; }
+}
+
+.show-dialog { isolation: isolate; }
+.show-dialog .draw-orbits { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: -1; }
+.show-dialog .draw-orbits::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 46%, #91bb4c16, transparent 65%); }
+.show-dialog .draw-orbit { position: absolute; width: 290px; height: 290px; border: 1px solid #d6eea71c; border-radius: 50%; left: calc(50% - 145px); top: calc(50% - 145px); }
+.show-dialog .draw-orbit:nth-child(2) { width: 390px; height: 390px; left: calc(50% - 195px); top: calc(50% - 195px); border-style: dashed; border-color: #d6eea710; }
+.show-dialog .draw-orbit:nth-child(3) { width: 510px; height: 510px; left: calc(50% - 255px); top: calc(50% - 255px); border-color: #d6eea710; }
+.show-dialog .draw-satellite { position: absolute; left: 50%; top: -4px; width: 7px; height: 7px; border-radius: 50%; background: #d6eea7; box-shadow: 0 0 18px #d6eea75c; }
+.show-dialog .draw-orbit:nth-child(2) .draw-satellite { width: 5px; height: 5px; opacity: .45; }
+.show-dialog .draw-orbit:nth-child(3) .draw-satellite { width: 4px; height: 4px; opacity: .3; }
+.show-dialog[data-stage="countdown"] .winner-emblem,
+.show-dialog[data-stage="mixing"] .winner-emblem { color: #b0cf89; }
+.show-dialog[data-stage="winner"] .winner-emblem { text-shadow: 0 0 35px #d6eea74a; }
+.show-dialog #draw-countdown { color: var(--lime); font: 800 110px/1.3 var(--heading); font-variant-numeric: tabular-nums; letter-spacing: -5px; }
+.show-dialog #draw-reel { position: relative; }
+.show-dialog .rolling-number { line-height: 1.25; font-size: 80px; padding-top: 16px; letter-spacing: -3px; text-shadow: 0 0 28px #d6eea718; }
+.show-dialog .reel-caption { color: #b6caa6; font-size: 11px; line-height: 1.6; min-height: 18px; margin: 10px 0; }
+.show-dialog .draw-progress { width: min(230px, 80%); height: 3px; margin: 25px auto 10px; background: #e9f5d91a; border-radius: 10px; overflow: hidden; }
+.show-dialog .draw-progress-bar { height: 100%; width: 0; border-radius: inherit; background: var(--lime); box-shadow: 0 0 15px #d6eea777; }
+.show-dialog[data-stage="winner"] .draw-progress { display: none; }
+.show-confetti { position: absolute; top: -20px; left: var(--confetti-x); width: var(--confetti-size); height: calc(var(--confetti-size) * 1.5); background: var(--confetti-color); opacity: 0; border-radius: 1px; pointer-events: none; }
+.show-confetti.is-round { height: var(--confetti-size); border-radius: 50%; }
+
+@keyframes show-enter { from { opacity: 0; translate: 0 12px; } to { opacity: 1; translate: 0 0; } }
+@keyframes show-modal { from { opacity: 0; scale: .96; translate: 0 12px; } to { opacity: 1; scale: 1; translate: 0 0; } }
+@keyframes show-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -9px; } }
+@keyframes show-twinkle { 0%, 100% { opacity: .55; scale: .9; } 50% { opacity: 1; scale: 1.1; } }
+@keyframes show-glint { 0%, 20% { translate: -60% 0; } 55%, 100% { translate: 65% 0; } }
+@keyframes show-countdown { from { scale: 1.1; opacity: .65; } 30% { opacity: 1; } to { scale: 1; opacity: 1; } }
+@keyframes show-orbit { to { rotate: 360deg; } }
+@keyframes show-reel { from { translate: 0 -2px; opacity: .75; } to { translate: 0 2px; opacity: 1; } }
+@keyframes show-emblem { from { scale: .65; rotate: -45deg; opacity: .25; } 60% { scale: 1.12; rotate: 8deg; opacity: 1; } to { scale: 1; rotate: 0deg; opacity: 1; } }
+@keyframes show-confetti-fall { 0% { opacity: 0; translate: 0 -10px; rotate: 0deg; } 8% { opacity: 1; } 80% { opacity: .9; } 100% { opacity: 0; translate: var(--confetti-drift) 680px; rotate: var(--confetti-spin); } }
+
+:root[data-effects="off"] *,
+:root[data-effects="off"] *::before,
+:root[data-effects="off"] *::after { animation: none !important; transition: none !important; }
+:root[data-effects="off"] { scroll-behavior: auto; }
+
+@media (max-width: 760px) {
+  .show-dialog #draw-countdown { font-size: 92px; }
+  .show-dialog .rolling-number { font-size: 67px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .show-confetti { display: none; }
+}
